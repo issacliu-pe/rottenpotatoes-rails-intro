@@ -8,7 +8,6 @@ class MoviesController < ApplicationController
 
   def index
     
-    @all_ratings = Movie.all_ratings
     @sort_by = session[:sort_by]
     @ratings_to_show = session[:ratings]
 		
@@ -40,6 +39,7 @@ class MoviesController < ApplicationController
       @release_date_active = ''
     end
     
+    @all_ratings = Movie.all_ratings
     @movies = Movie.with_ratings(@ratings_to_show.keys,@sort_by)
   end
 
