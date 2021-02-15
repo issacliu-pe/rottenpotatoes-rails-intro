@@ -8,6 +8,12 @@ class MoviesController < ApplicationController
 
   def index
     
+    @all_ratings = Movie.all_ratings
+    
+		if params[:commit] == "Refresh"
+		  session[:ratings] = params[:ratings]
+		end
+		
     if params[:ratings]
       session[:ratings] = params[:ratings]
     else
@@ -15,27 +21,31 @@ class MoviesController < ApplicationController
         session[:ratings] = Hash.new
       end
     end
-    if params[:sortby]
-      session[:sortby] = params[:sortby]
+    
+    if params[:sort_by]
+      session[:sort_by] = params[:sort_by]
     else
-      if not session[:sortby]
-        session[:sortby] = nil
+      if not session[:sort_by]
+        session[:sort_by] = nil
       end
     end
-    if session[:sortby] == 'title'
+    
+    if session[:sort_by] == 'title'
       @title_active = 'hilite bg-warning'
     else
       @title_active = ''
     end
-    if session[:sortby] == 'release_date'
+    
+    if session[:sort_by] == 'release_date'
       @release_date_active = 'hilite bg-warning'
     else
       @release_date_active = ''
     end
-    @sortby = session[:sortby]
+    
+    @sort_by = session[:sort_by]
     @ratings_to_show = session[:ratings]
-    @movies = Movie.with_ratings(@ratings_to_show.keys,@sortby)
-    @all_ratings = Movie.all_ratings
+    
+    @movies = Movie.with_ratings(@ratings_to_show.keys,@sort_by)
     
   end
 
