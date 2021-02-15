@@ -1,8 +1,5 @@
 class Movie < ActiveRecord::Base
     
-    @all_ratings = ['G', 'PG', 'PG-13', 'R']
-    @ratings_to_show = []
-    
     def self.with_ratings(ratings_list, sort_by)
     # if ratings_list is an array such as ['G', 'PG', 'R'], retrieve all
     #  movies with those ratings
@@ -17,11 +14,7 @@ class Movie < ActiveRecord::Base
     end
     
     def self.all_ratings
-        return @all_ratings
+        return ['G', 'PG', 'PG-13', 'R']
     end
     
-	def self.ratings_to_show
-		return @ratings_to_show
-	end
-	
 end
