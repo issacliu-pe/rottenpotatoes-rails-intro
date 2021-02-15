@@ -7,8 +7,39 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    
+    if params[:ratings]
+      session[:ratings] = params[:ratings]
+    else
+      if not session[:ratings]
+        session[:ratings] = Hash.new
+      end
+    end
+    if params[:sortby]
+      session[:sortby] = params[:sortby]
+    else
+      if not session[:sortby]
+        session[:sortby] = nil
+      end
+    end
+    if session[:sortby] == 'title'
+      @title_active = 'hilite bg-warning'
+    else
+      @title_active = ''
+    end
+    if session[:sortby] == 'release_date'
+      @release_date_active = 'hilite bg-warning'
+    else
+      @release_date_active = ''
+    end
+    @sortby = session[:sortby]
+    @ratings_to_show = session[:ratings]
+    @movies = Movie.with_ratings(@ratings_to_show.keys,@sortby)
+    @all_ratings = Movie.all_ratings
+    
   end
+
+
 
   def new
     # default: render 'new' template
