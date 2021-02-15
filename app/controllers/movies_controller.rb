@@ -8,73 +8,74 @@ class MoviesController < ApplicationController
 
   def index
     
+		# if params[:commit] == "Refresh"
+		# 	session[:ratings] = params[:ratings]
+		# end
+		
+		# if params[:ratings].nil? and session[:ratings].nil?
+		# 	@ratings_to_show = Movie.all_ratings
+		#   @movies = Movie.all
+		# else
+		# 	if params[:ratings].nil?
+  #       @sort_by = session[:sort_by]
+  #       @ratings_to_show = session[:ratings]
+		# 		redirect_to(Movie.with_ratings(@ratings_to_show.keys,@sort_by))
+		# 	end
+		# 	@movies = Movie.with_ratings(params[:ratings].keys)
+  #     @ratings_to_show = session[:ratings]
+		# 	session[:ratings] = params[:ratings]
+		# end
+
+		# unless params[:sort].nil? and session[:sort].nil?
+		  
+		# 	if params[:sort].nil?
+		# 		params[:sort] = session[:sort]
+		# 	end
+			
+  #     @sort_by = session[:sort_by]
+  #     @ratings_to_show = session[:ratings]
+		# 	@movies = Movie.with_ratings(@ratings_to_show.keys,@sort_by)
+		# 	session[:sort] = params[:sort]
+		# end
+		
+		
     @all_ratings = Movie.all_ratings
     @sort_by = session[:sort_by]
     @ratings_to_show = session[:ratings]
     @movies = Movie.with_ratings(@ratings_to_show.keys,@sort_by)
-    
-		if params[:commit] == "Refresh"
-			session[:ratings] = params[:ratings]
-		end
-		
-		
-		if params[:ratings].nil? and session[:ratings].nil?
-			@ratings_to_show = Movie.all_ratings
-		  @movies = Movie.all
-		else
-			if params[:ratings].nil?
-				params[:ratings] = session[:ratings]
-				redirect_to(movies_path(ratings: params[:ratings], sort: params[:sort]))
-			end
-			@movies = Movie.with_ratings(params[:ratings].keys)
-      @ratings_to_show = Movie.ratings_to_show
-			session[:ratings] = params[:ratings]
-		end
 
-		unless params[:sort].nil? and session[:sort].nil?
-			if params[:sort].nil?
-				params[:sort] = session[:sort]
-			end
-      @sort_by = session[:sort_by]
-      @ratings_to_show = session[:ratings]
-			@movies = Movie.with_ratings(@ratings_to_show.keys,@sort_by)
-			session[:sort] = params[:sort]
-		end
-		
-		
-    # @all_ratings = Movie.all_ratings
-    # @sort_by = session[:sort_by]
-    # @ratings_to_show = session[:ratings]
-    # @movies = Movie.with_ratings(@ratings_to_show.keys,@sort_by)
+    if params[:ratings]
+      session[:ratings] = params[:ratings]
+    else
+      if not session[:ratings]
+        session[:ratings] = Hash.new
+      end
+    end
+    
+    if params[:sort_by]
+      session[:sort_by] = params[:sort_by]
+    else
+      if not session[:sort_by]
+        session[:sort_by] = nil
+      end
+    end
+    
+    if session[:sort_by] == 'title'
+      @title_active = 'hilite bg-warning'
+    else
+      @title_active = ''
+    end
+    
+    if session[:sort_by] == 'release_date'
+      @release_date_active = 'hilite bg-warning'
+    else
+      @release_date_active = ''
+    end
 
-    # if params[:ratings]
-    #   session[:ratings] = params[:ratings]
-    # else
-    #   if not session[:ratings]
-    #     session[:ratings] = Hash.new
-    #   end
-    # end
-    
-    # if params[:sort_by]
-    #   session[:sort_by] = params[:sort_by]
-    # else
-    #   if not session[:sort_by]
-    #     session[:sort_by] = nil
-    #   end
-    # end
-    
-    # if session[:sort_by] == 'title'
-    #   @title_active = 'hilite bg-warning'
-    # else
-    #   @title_active = ''
-    # end
-    
-    # if session[:sort_by] == 'release_date'
-    #   @release_date_active = 'hilite bg-warning'
-    # else
-    #   @release_date_active = ''
-    # end
-
+    @all_ratings = Movie.all_ratings
+    @sort_by = session[:sort_by]
+    @ratings_to_show = session[:ratings]
+    @movies = Movie.with_ratings(@ratings_to_show.keys,@sort_by)
     
   end
 
