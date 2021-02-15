@@ -8,7 +8,7 @@ class Movie < ActiveRecord::Base
     #  movies with those ratings
     # if ratings_list is nil, retrieve ALL movies
     
-        if sortby
+        if sort_by
           return Movie.where({rating: ratings_list}).order(sort_by)
         else
           return Movie.where({rating: ratings_list})

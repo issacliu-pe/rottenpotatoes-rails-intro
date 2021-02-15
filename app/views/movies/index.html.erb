@@ -21,12 +21,12 @@
   <thead>
     <tr>
       
-      <th class="<%= ('hilite' if params[:sort] == 'title') %>">
-        <%= link_to "Movie Title", movies_path(ratings:@ratings_to_show,sort_by: 'title'), id:"title_header" %>
+      <th class="<%= @title_active %>">
+        <%= link_to "Movie Title", movies_path(ratings:@ratings_to_show, sort_by: 'title'), id:"title_header" %>
       </th>
-      
+       
       <th>Rating</th>
-      <th class="<%= ('hilite' if params[:sort] == 'release_date') %>">
+      <th class="<%= @release_date_active %>">
         <%= link_to "Release Date", movies_path(ratings:@ratings_to_show, sort_by: 'release_date'), id:"release_date_header" %>
       </th>
       
