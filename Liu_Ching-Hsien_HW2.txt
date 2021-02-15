@@ -1,0 +1,7 @@
+Ruby version 2.6.4
+
+Github:
+https://github.com/issacliu-pe/rottenpotatoes-rails-intro
+
+Heroku:
+http://immense-caverns-97475.herokuapp.com/
