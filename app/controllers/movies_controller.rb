@@ -12,8 +12,6 @@ class MoviesController < ApplicationController
     @sort_by = session[:sort_by]
     @ratings_to_show = session[:ratings]
     
-    @movies = Movie.with_ratings(@ratings_to_show.keys,@sort_by)
-    
 		if params[:commit] == "Refresh"
 		  session[:ratings] = params[:ratings]
 		end
@@ -46,6 +44,7 @@ class MoviesController < ApplicationController
       @release_date_active = ''
     end
     
+    @movies = Movie.with_ratings(@ratings_to_show.keys,@sort_by)
   end
 
   def new
