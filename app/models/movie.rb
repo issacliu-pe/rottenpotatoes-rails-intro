@@ -24,7 +24,4 @@ class Movie < ActiveRecord::Base
         return @all_ratings
     end
     
-	def self.ratings_to_show
-		return @ratings_to_show
-	end
 end
